@@ -1,28 +1,38 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="row no-gutters">
+      <!-- 選擇地區 -->
+      <div class="toolbox col-sm-4 p-2 bg-white">
+        <div class="form-group d-flex">
+          <label for="cityName" class="col-form-label mr-2 text-right">縣市</label>
+          <div class="flex-fill">
+            <select id="cityName" class="form-control"></select>
+          </div>
+        </div>
+        <div class="form-group d-flex">
+          <label for="area" class="col-form-label mr-2 text-right">地區</label>
+          <div class="flex-fill">
+            <select id="area" class="form-control"></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 顯示 ubike 站點 -->
+      <div class="col-sm-12">
+        <div id="map"></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld,
-  },
-};
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import 'bootstrap/scss/bootstrap';
+
+  #map {
+    position: relative;
+    height: 100vh;
+  }
 </style>
