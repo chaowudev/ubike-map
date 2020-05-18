@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import L from 'leaflet';
 import cityName from './assets/cityName.json';
 
 export default {
@@ -48,6 +49,7 @@ export default {
       dist: '中正區',
     },
     ubikes: [],
+    OSMap: {},
   }),
   created() {
     const api = 'https://tcgbusfs.blob.core.windows.net/blobyoubike/YouBikeTP.json';
@@ -55,6 +57,17 @@ export default {
       // response.data 是一個 Object，我們所需的 ubikes 是 Object 每一個 key 的 value（各站點資訊）
       this.ubikes = Object.keys(response.data.retVal).map((key) => response.data.retVal[key]);
     });
+  },
+  mounted() {
+    this.OSMap = L.map('map', {
+      center: [25.041956, 121.508791],
+      zoom: 18,
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 20,
+    }).addTo(this.OSMap);
   },
 };
 </script>
