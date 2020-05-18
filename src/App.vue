@@ -47,7 +47,15 @@ export default {
       city: '臺北市',
       dist: '中正區',
     },
+    ubikes: [],
   }),
+  created() {
+    const api = 'https://tcgbusfs.blob.core.windows.net/blobyoubike/YouBikeTP.json';
+    this.$http.get(api).then((response) => {
+      // response.data 是一個 Object，我們所需的 ubikes 是 Object 每一個 key 的 value（各站點資訊）
+      this.ubikes = Object.keys(response.data.retVal).map((key) => response.data.retVal[key]);
+    });
+  },
 };
 </script>
 
