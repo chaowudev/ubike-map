@@ -51,6 +51,46 @@ export default {
     ubikes: [],
     OSMap: {},
   }),
+  computed: {
+    // 篩選出與選擇區域相符區域的 ubike 站點
+    youbikes() {
+      return this.ubikes.filter((bike) => {
+        if (!this.select.dist) {
+          return this.select.city;
+        }
+        return bike.sarea === this.select.dist;
+      });
+    },
+  },
+  watch: {
+    youbikes() {
+      // 當 youbikes 的值變動時，就會執行 updateMap() 方法
+      this.updateMap();
+    },
+  },
+  methods: {
+    updateMap() {
+      // remove markers
+      this.OSMap.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          this.OSMap.removeLayer(layer);
+        }
+      });
+
+      // add markers
+      this.youbikes.forEach((bike) => {
+        L.marker([bike.lat, bike.lng]).addTo(this.OSMap);
+      });
+
+      // move to new center
+      this.cityName[0].districts.find((dist) => {
+        if (this.select.dist === dist.name) {
+          this.OSMap.panTo(new L.LatLng(dist.latitude, dist.longitude));
+        }
+        return this.select.dist === dist.name;
+      });
+    },
+  },
   created() {
     const api = 'https://tcgbusfs.blob.core.windows.net/blobyoubike/YouBikeTP.json';
     this.$http.get(api).then((response) => {
@@ -61,7 +101,7 @@ export default {
   mounted() {
     this.OSMap = L.map('map', {
       center: [25.041956, 121.508791],
-      zoom: 18,
+      zoom: 17,
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
