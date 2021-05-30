@@ -1,4 +1,7 @@
-# ubike-map
+# ubike-map 🚲
+This is a simple tool to find the ubike which can be rented.
+
+You can use it from here: https://chaowudev.github.io/ubike-map/
 
 ## Project setup
 ```
@@ -19,6 +22,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
